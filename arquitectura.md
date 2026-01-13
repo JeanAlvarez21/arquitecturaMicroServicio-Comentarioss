@@ -360,6 +360,47 @@ graph LR
 - El Gateway orquesta las llamadas
 - Los microservicios no se comunican directamente entre sí
 
+## 📁 Estructura Completa del Proyecto
+
+```mermaid
+graph TB
+    subgraph Root[arquitecturaMicroServicios/]
+        subgraph Services[Microservicios]
+            Authors[LumenAuthorsApi/]
+            Books[LumenBooksApi/]
+            Gateway[LumenGatewayApi/]
+        end
+        
+        subgraph Docs[Documentación]
+            APIDocs[docs/<br/>OpenAPI/Swagger]
+            ArchDoc[arquitectura.md]
+            Guide[guiaEstudiante.md]
+        end
+        
+        subgraph CI[CI/CD]
+            GitHub[.github/workflows/]
+            GitLab[.gitlab-ci.yml]
+            Pipeline[pipeline/]
+        end
+        
+        subgraph Scripts[Scripts de Prueba]
+            TestAPI[test_api.sh]
+            TestGateway[test_gateway_simple.sh]
+        end
+        
+        Root --> Services
+        Root --> Docs
+        Root --> CI
+        Root --> Scripts
+    end
+    
+    style Authors fill:#2196F3,stroke:#1565C0,color:#fff
+    style Books fill:#FF9800,stroke:#E65100,color:#fff
+    style Gateway fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style APIDocs fill:#9C27B0,stroke:#6A1B9A,color:#fff
+    style CI fill:#F44336,stroke:#C62828,color:#fff
+```
+
 ## 📦 Estructura de Componentes Detallada
 
 ```mermaid
@@ -486,6 +527,75 @@ graph TB
     style G3 fill:#4CAF50,stroke:#2E7D32,color:#fff
 ```
 
+## 🔄 Pipeline CI/CD
+
+```mermaid
+graph TB
+    subgraph "Repositorio"
+        Code[Código Fuente]
+    end
+    
+    subgraph "CI/CD Pipeline"
+        Trigger[Push/PR Trigger]
+        Validate[Validación]
+        Test[Tests Unitarios]
+        Integration[Tests Integración]
+        Deploy[Despliegue]
+    end
+    
+    subgraph "Validación"
+        Syntax[Verificar Sintaxis PHP]
+        Composer[Validar composer.json]
+        Dependencies[Instalar Dependencias]
+    end
+    
+    subgraph "Testing"
+        UnitTests[PHPUnit Tests]
+        Migrations[Ejecutar Migraciones]
+        Coverage[Reportes Cobertura]
+    end
+    
+    subgraph "Integración"
+        StartServices[Iniciar Servicios]
+        HealthCheck[Verificar Conectividad]
+        IntegrationTests[Tests de Integración]
+    end
+    
+    Code --> Trigger
+    Trigger --> Validate
+    Validate --> Syntax
+    Validate --> Composer
+    Validate --> Dependencies
+    
+    Validate --> Test
+    Test --> UnitTests
+    Test --> Migrations
+    Test --> Coverage
+    
+    Test --> Integration
+    Integration --> StartServices
+    Integration --> HealthCheck
+    Integration --> IntegrationTests
+    
+    Integration --> Deploy
+    
+    style Trigger fill:#9C27B0,stroke:#6A1B9A,color:#fff
+    style Validate fill:#2196F3,stroke:#1565C0,color:#fff
+    style Test fill:#FF9800,stroke:#E65100,color:#fff
+    style Integration fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style Deploy fill:#F44336,stroke:#C62828,color:#fff
+```
+
+**Plataformas Soportadas:**
+- **GitHub Actions**: `.github/workflows/ci.yml`
+- **GitLab CI**: `.gitlab-ci.yml`
+
+**Etapas del Pipeline:**
+1. **Validación**: Verificación de sintaxis PHP y validación de dependencias
+2. **Tests Unitarios**: Ejecución de PHPUnit en cada microservicio
+3. **Tests de Integración**: Verificación de comunicación entre servicios
+4. **Despliegue**: Despliegue manual a staging/production (GitLab)
+
 ## 📝 Resumen de Tecnologías
 
 ```mermaid
@@ -508,6 +618,15 @@ mindmap
             Respuestas JSON estandarizadas
             Manejo de excepciones
             Validación entre servicios
+        CI/CD
+            GitHub Actions
+            GitLab CI
+            PHPUnit Tests
+            Tests de Integración
+        Documentación
+            OpenAPI/Swagger
+            Swagger UI
+            Diagramas Mermaid
 ```
 
 ## 🎯 Principios de Diseño Aplicados
@@ -518,6 +637,25 @@ mindmap
 4. **Base de Datos Independiente**: Cada servicio tiene su propia base de datos
 5. **Punto de Entrada Único**: El Gateway centraliza todas las peticiones
 6. **Validación Centralizada**: El Gateway valida reglas de negocio entre servicios
+7. **Integración Continua**: Pipeline CI/CD automatizado para validación y testing
+8. **Documentación Primero**: APIs documentadas con OpenAPI/Swagger
+
+## 📚 Documentación y Herramientas
+
+### Documentación de APIs
+- **OpenAPI 3.0**: Especificaciones completas para cada servicio
+- **Swagger UI**: Interfaz interactiva para probar endpoints
+- **Visualización**: Disponible en `docs/index.html`
+
+### CI/CD Pipeline
+- **Validación Automática**: Verificación de código en cada push
+- **Tests Automatizados**: Ejecución de PHPUnit y tests de integración
+- **Reportes**: Cobertura de código y resultados de tests
+
+### Herramientas de Desarrollo
+- **Scripts de Prueba**: `test_api.sh`, `test_gateway_simple.sh`
+- **Validación Local**: `pipeline/local-test.sh`
+- **Documentación**: Scripts para servir documentación localmente
 
 ---
 

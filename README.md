@@ -64,6 +64,7 @@ arquitecturaMicroServicios/
 │   ├── database/
 │   │   └── migrations/
 │   │       └── create_authors_table.php
+│   ├── tests/                # Tests unitarios
 │   └── routes/
 │       └── web.php
 │
@@ -78,25 +79,54 @@ arquitecturaMicroServicios/
 │   ├── database/
 │   │   └── migrations/
 │   │       └── create_books_table.php
+│   ├── tests/                # Tests unitarios
 │   └── routes/
 │       └── web.php
 │
-└── LumenGatewayApi/          # API Gateway
-    ├── app/
-    │   ├── Http/
-    │   │   └── Controllers/
-    │   │       ├── AuthorController.php
-    │   │       └── BookController.php
-    │   ├── Services/
-    │   │   ├── AuthorService.php
-    │   │   └── BookService.php
-    │   └── Traits/
-    │       ├── ApiResponser.php
-    │       └── ConsumesExternalService.php
-    ├── config/
-    │   └── services.php      # Configuración de URLs de servicios
-    └── routes/
-        └── web.php
+├── LumenGatewayApi/          # API Gateway
+│   ├── app/
+│   │   ├── Http/
+│   │   │   └── Controllers/
+│   │   │       ├── AuthorController.php
+│   │   │       └── BookController.php
+│   │   ├── Services/
+│   │   │   ├── AuthorService.php
+│   │   │   └── BookService.php
+│   │   └── Traits/
+│   │       ├── ApiResponser.php
+│   │       └── ConsumesExternalService.php
+│   ├── config/
+│   │   └── services.php      # Configuración de URLs de servicios
+│   ├── tests/                # Tests unitarios
+│   └── routes/
+│       └── web.php
+│
+├── docs/                     # Documentación de APIs
+│   ├── api-authors-openapi.yaml
+│   ├── api-books-openapi.yaml
+│   ├── api-gateway-openapi.yaml
+│   ├── api-authors.html      # Swagger UI para Authors API
+│   ├── api-books.html        # Swagger UI para Books API
+│   ├── api-gateway.html      # Swagger UI para Gateway API
+│   ├── index.html            # Página principal de documentación
+│   └── servir-docs.sh        # Script para servir documentación
+│
+├── pipeline/                 # Configuración CI/CD
+│   ├── ci.yml                # GitHub Actions workflow
+│   ├── .gitlab-ci.yml        # GitLab CI configuration
+│   ├── local-test.sh         # Script de validación local
+│   ├── docker-compose.test.yml
+│   └── README.md             # Documentación del pipeline
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml            # GitHub Actions workflow
+│
+├── arquitectura.md           # Documentación de arquitectura
+├── guiaEstudiante.md         # Guía para estudiantes
+├── test_api.sh              # Script de pruebas de APIs
+├── test_gateway_simple.sh   # Script de pruebas del Gateway
+└── README.md                 # Este archivo
 ```
 
 ## 🔧 Requisitos
@@ -391,11 +421,22 @@ curl http://localhost:8000/authors/1
 
 ## 🛠️ Tecnologías Utilizadas
 
+### Backend
 - **Laravel Lumen 10.x**: Framework PHP ligero para APIs (actualizado desde 5.7)
-- **Guzzle HTTP 7.8**: Cliente HTTP para comunicación entre servicios
-- **SQLite**: Base de datos ligera para desarrollo
-- **Eloquent ORM**: ORM de Laravel para acceso a datos
 - **PHP 8.1+**: Versión moderna de PHP con mejor rendimiento
+- **Guzzle HTTP 7.8**: Cliente HTTP para comunicación entre servicios
+- **Eloquent ORM**: ORM de Laravel para acceso a datos
+- **SQLite**: Base de datos ligera para desarrollo
+
+### Testing y CI/CD
+- **PHPUnit 10.x**: Framework de testing para PHP
+- **GitHub Actions**: Pipeline de CI/CD para GitHub
+- **GitLab CI**: Pipeline de CI/CD para GitLab
+
+### Documentación
+- **OpenAPI 3.0**: Especificación estándar para documentación de APIs
+- **Swagger UI**: Interfaz interactiva para visualizar y probar APIs
+- **Mermaid**: Diagramas de arquitectura y flujos
 
 ## 📝 Estructura de Datos
 
@@ -488,14 +529,37 @@ Este proyecto utiliza la licencia MIT.
 
 Este es un proyecto educativo para demostrar arquitectura de microservicios con Lumen.
 
+## 🔄 CI/CD Pipeline
+
+Este proyecto incluye pipelines de CI/CD configurados para GitHub Actions y GitLab CI:
+
+- **GitHub Actions**: `.github/workflows/ci.yml`
+- **GitLab CI**: `.gitlab-ci.yml`
+
+**Características del Pipeline:**
+- ✅ Validación de código PHP y sintaxis
+- ✅ Instalación y validación de dependencias
+- ✅ Ejecución de tests unitarios (PHPUnit)
+- ✅ Tests de integración entre servicios
+- ✅ Validación de documentación OpenAPI
+- ✅ Reportes de cobertura de código
+
+**Ejecutar validaciones localmente:**
+```bash
+bash pipeline/local-test.sh
+```
+
+Para más información, consulta la [Documentación del Pipeline](pipeline/README.md).
+
 ## 📚 Documentación Adicional
 
 Este proyecto incluye documentación adicional para facilitar su uso y comprensión:
 
 - **[arquitectura.md](arquitectura.md)**: Documentación detallada de la arquitectura con diagramas Mermaid interactivos
 - **[guiaEstudiante.md](guiaEstudiante.md)**: Guía completa paso a paso para estudiantes que quieran crear nuevos microservicios y consumir servicios existentes
-- **[EJECUTAR_COMPOSER_UPDATE.md](EJECUTAR_COMPOSER_UPDATE.md)**: Guía para ejecutar composer update en cada servicio
+
 - **[Documentación de APIs](docs/index.html)**: Documentación interactiva OpenAPI/Swagger de todas las APIs (visualizable en el navegador)
+- **[Documentación del Pipeline](pipeline/README.md)**: Guía completa sobre los pipelines CI/CD
 
 ### 📖 Documentación de APIs
 
@@ -531,4 +595,4 @@ Para preguntas o problemas, revisa la documentación de [Laravel Lumen](https://
 
 ---
 
-**Desarrollado con ❤️ usando Laravel Lumen**
+**Desarrollado con ❤️ usando Laravel Lumen** - xavicrip
