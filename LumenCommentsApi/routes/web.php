@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Laravel\Lumen\Routing\Router $router */
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,25 +13,9 @@
 |
 */
 
-    /**
-     * Authors routes
-     */
-    $router->get('/authors', 'AuthorController@index');
-    $router->post('/authors', 'AuthorController@store');
-    $router->get('/authors/{author}', 'AuthorController@show');
-    $router->put('/authors/{author}', 'AuthorController@update');
-    $router->patch('/authors/{author}', 'AuthorController@update');
-    $router->delete('/authors/{author}', 'AuthorController@destroy');
-
-    /**
-     * Books routes
-     */
-    $router->get('/books', 'BookController@index');
-    $router->post('/books', 'BookController@store');
-    $router->get('/books/{book}', 'BookController@show');
-    $router->put('/books/{book}', 'BookController@update');
-    $router->patch('/books/{book}', 'BookController@update');
-    $router->delete('/books/{book}', 'BookController@destroy');
+$router->get('/', function () use ($router) {
+    return $router->app->version();
+});
 
 $router->get('/comments', 'CommentController@index');
 $router->post('/comments', 'CommentController@store');
@@ -37,4 +23,5 @@ $router->get('/comments/{comment}', 'CommentController@show');
 $router->put('/comments/{comment}', 'CommentController@update');
 $router->patch('/comments/{comment}', 'CommentController@update');
 $router->delete('/comments/{comment}', 'CommentController@destroy');
+
 $router->get('/comments/review/{review_id}', 'CommentController@commentsByReview');
